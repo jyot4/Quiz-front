@@ -1,150 +1,121 @@
-// import React, { useState, useEffect } from 'react'
-// import axios from 'axios'
 
-// function Question() {
-
-//     const [AllData, setAllData] = useState([])
-//     const [question, setQuestion] = useState('')
-//     const [option, setOption] = useState('')
-// const [time , setTime] = useState(0)
-
-
-
-//     // useEffect(()=>{
-//     //     axios.get('http://localhost:4000/data',{question,option} )
-//     //     .then((result)=>{
-//     //         setAllData(result.data)
-//     //         console.log('hello')
-//     //     })
-//     // },[question,option])
-//     useEffect(() => {
-//         axios.get('http://localhost:4000/quiz')
-//             .then((result) => {
-//                 setAllData(result.data)
-//                 console.log(result)
-//             })
-
-
-            
-//     },[])
-
-//     useEffect(()=>{
-//         if(time <AllData.length){
-//             const timeoutId =setTimeout(()=>{
-//             setTime(time+1)
-//             },15000)
-//             return clearTimeout(timeoutId)
-//         }  
-//     },[time])
-
-//     return (
-//         <div>
-
-
-
-//             {
-//                 AllData.map((data, index) => {
-//                     return (
-//                         <div key={index}>
-//                             <h1 onClick={() => setQuestion(data.question)}>{data.question}</h1>
-//                             {/* <option > */}
-//                                 <ul>
-//                                     <li onClick={() => setOption}>{data.option[0]}</li>
-//                                     <li onClick={() => setOption}>{data.option[1]}</li>
-//                                     <li onClick={() => setOption}>{data.option[2]}</li>
-//                                     <li onClick={() => setOption}>{data.option[3]}</li>
-//                                 </ul>
-//                             {/* </option> */}
-//                         </div>
-//                     )
-//                 })
-//             }
-
-//         </div>
-//     )
-// }
-
-// export default Question
 
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Question.css'
 
 function Question() {
   const [allData, setAllData] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState();
-  const [currentOptions, setCurrentOptions] = useState([]);
-  const [time, setTime] = useState(0);
-  const [timer, setTimer] = useState(15);
-
+const [counter , setCounter] = useState(15);
+const [currentQuestion , setCurrentQuestion] = useState(0)
+const[userAnswer , setUserAnswer] = useState()
+  
   useEffect(() => {
-    axios.get('http://localhost:4000/quiz').then((result) => {
+    axios.get('http://localhost:4000/quiz')
+    .then((result) => {
       setAllData(result.data);
     });
   }, []);
 
-  useEffect(() => {
-    if (time < allData.length) {
-      const timeoutId = setTimeout(() => {
-        setCurrentQuestion(allData[time].question);
-        setCurrentOptions(allData[time].options);
-        setTime(time + 1);
-        setTimer(15);
-      }, 15000);
 
-      // Update timer every second
-      const timerIntervalId = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1);
-      }, 1000);
+ //........................................for next question ...............................................//
+  const nextQuestion=()=>{
 
-      // Cleanup function to clear the timeout and interval when the component unmounts or when the next question is shown
-      return () => {
-        clearTimeout(timeoutId);
-        clearInterval(timerIntervalId);
-      };
+    setUserAnswer(null);
+if(currentQuestion < allData.length-1){
+  setCurrentQuestion(currentQuestion+1)
+}
+  }
+//.........................................//for previous question .....................................
+  const previousQuestion = ()=>{
+
+    setUserAnswer(null);
+    if (currentQuestion > 0){
+      setCurrentQuestion(currentQuestion-1)
     }
-  }, [time, allData]);
+  }
 
+
+
+  //..............................counter..........................................
+
+  useEffect(()=>{
+
+    const interval = setInterval(()=>{
+      if(counter>= 1){
+        setCounter((prevcounter)=> prevcounter - 1)
+      }
+      if(counter === 0 ){
+        if(currentQuestion < allData.length - 1){
+          setCurrentQuestion((prevQuestion)=>prevQuestion+1);
+          setCounter(15)
+        }
+      }
+    },1000)
+    return ()=> clearInterval(interval)
+
+  },
   
+  
+  [counter, currentQuestion , allData])
+
+///////....................................for correct Answer.....................................//
+
+// const checkAnswer = (selectedOption)=>{
+//   const correctAnswer =allData[currentQuestion]?.answer;
+
+//   if(selectedOption === correctAnswer){
+//     setUserAnswer('correct')
+
+//   }
+//   else{
+//     setUserAnswer('wrongAnswer')
+//   }
+// }
+// console.log(userAnswer)
+
+
+const checkAnswer = (selectedOption) => {
+  const correctAnswer = allData[currentQuestion]?.answer;
+console.log(correctAnswer)
+  if (selectedOption === correctAnswer) {
+    setUserAnswer('correct');
+  } else {
+    setUserAnswer('Wrong Answer');
+  console.log(checkAnswer)
+
+  }
+};  
+// console.log(checkAnswer)
 
   return (
-    <div>
-      {/* {All && (
-        <div>
-          <h1>{currentQuestion}</h1>
-          <p>Time remaining: {timer}s</p>
-          <ul>
-            {currentOptions.map((option, index) => (
-              <li key={index} onClick={() => handleOptionClick(option)}>
-                {option}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
+ 
 
-{
-    allData.map((data,index)=>{
-        return(
-            <div key={index}>
-                           <h1 onClick={() => setCurrentQuestion(data.question)}>{data.question}</h1>                         {/* <option > */}
-                              <ul>
-                                      {/* <li onClick={() => setCurrentOptions}>{data.option[0]}</li>                                    <li onClick={() => setOption}>{data.option[1]}</li> */}
-                                     <li onClick={() => setCurrentOptions}>{data.option[0]}</li>
-                               <li onClick={() => setCurrentOptions}>{data.option[1]}</li>
-                               <li onClick={() => setCurrentOptions}>{data.option[2]}</li>
-                               <li onClick={() => setCurrentOptions}>{data.option[3]}</li>
-                               
-                              </ul>
-           
-                        </div>
-        )
-    })
-}
+<div>
+      <div>
+        <h1>{counter}</h1>
+        <h1>{allData[currentQuestion]?.question}</h1>
+        <button  className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[0])}>{allData[currentQuestion]?.option[0]} 
+        </button><br />
+        <button   className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[1])}>{allData[currentQuestion]?.option[1]} 
+        </button><br />
+        <button className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[2])}>{allData[currentQuestion]?.option[2]}</button><br />
 
+        <button   className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[3])}>{allData[currentQuestion]?.option[3]}</button><br />
+
+
+
+<p>{userAnswer}</p>
+        <button onClick={previousQuestion}>Previous</button>
+        <button onClick={nextQuestion}>Next</button>
+
+
+        
       </div>
+    </div>
+  )
 
-)
 }
 
 export default Question;
