@@ -12,7 +12,8 @@ const [currentQuestion , setCurrentQuestion] = useState(0)
 const[userAnswer , setUserAnswer] = useState()
   
   useEffect(() => {
-    axios.get('http://localhost:4000/quiz')
+    // axios.get('http://localhost:4000/quiz')
+    axios.get('https://quiz-backend-dy73.onrender.com/quiz')
     .then((result) => {
       setAllData(result.data);
     });
@@ -62,19 +63,6 @@ if(currentQuestion < allData.length-1){
 
 ///////....................................for correct Answer.....................................//
 
-// const checkAnswer = (selectedOption)=>{
-//   const correctAnswer =allData[currentQuestion]?.answer;
-
-//   if(selectedOption === correctAnswer){
-//     setUserAnswer('correct')
-
-//   }
-//   else{
-//     setUserAnswer('wrongAnswer')
-//   }
-// }
-// console.log(userAnswer)
-
 
 const checkAnswer = (selectedOption) => {
   const correctAnswer = allData[currentQuestion]?.answer;
@@ -87,7 +75,7 @@ console.log(correctAnswer)
 
   }
 };  
-// console.log(checkAnswer)
+  
 
   return (
  
