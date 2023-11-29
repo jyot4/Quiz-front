@@ -76,7 +76,18 @@ console.log(correctAnswer)
   }
 };  
   
+///.....................................
 
+
+const buttons = document.querySelectorAll('.option-button');
+buttons.forEach((button, index) => {
+  if (index === correctAnswer) {
+    button.classList.add('correct');
+  } else {
+    button.classList.add('incorrect');
+  }
+});
+};
   return (
  
 
@@ -84,13 +95,17 @@ console.log(correctAnswer)
       <div>
         <h1>{counter}</h1>
         <h1>{allData[currentQuestion]?.question}</h1>
-        <button  className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[0])}>{allData[currentQuestion]?.option[0]} 
+        <button className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
+ onClick={() => checkAnswer(allData[currentQuestion]?.option[0])}>{allData[currentQuestion]?.option[0]} 
         </button><br />
-        <button   className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[1])}>{allData[currentQuestion]?.option[1]} 
+        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
+ onClick={() => checkAnswer(allData[currentQuestion]?.option[1])}>{allData[currentQuestion]?.option[1]} 
         </button><br />
-        <button className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[2])}>{allData[currentQuestion]?.option[2]}</button><br />
+        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
+ onClick={() => checkAnswer(allData[currentQuestion]?.option[2])}>{allData[currentQuestion]?.option[2]}</button><br />
 
-        <button   className={userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''} onClick={() => checkAnswer(allData[currentQuestion]?.option[3])}>{allData[currentQuestion]?.option[3]}</button><br />
+        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
+ onClick={() => checkAnswer(allData[currentQuestion]?.option[3])}>{allData[currentQuestion]?.option[3]}</button><br />
 
 
 
@@ -104,6 +119,6 @@ console.log(correctAnswer)
     </div>
   )
 
-}
+
 
 export default Question;
