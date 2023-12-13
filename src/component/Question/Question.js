@@ -3,7 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Question.css'
+import './Question.css';
+import quiz from './quizzz.jpg'
 
 function Question() {
   const [allData, setAllData] = useState([]);
@@ -12,8 +13,8 @@ const [currentQuestion , setCurrentQuestion] = useState(0)
 const[userAnswer , setUserAnswer] = useState()
   
   useEffect(() => {
-    // axios.get('http://localhost:4000/quiz')
-    axios.get('https://quiz-backend-dy73.onrender.com/quiz')
+    axios.get('http://localhost:4000/quiz')
+    // axios.get('https://quiz-backend-dy73.onrender.com/quiz')
     .then((result) => {
       setAllData(result.data);
     });
@@ -76,36 +77,22 @@ console.log(correctAnswer)
   }
 };  
   
-///.....................................
 
-
-const buttons = document.querySelectorAll('.option-button');
-buttons.forEach((button, index) => {
-  if (index === correctAnswer) {
-    button.classList.add('correct');
-  } else {
-    button.classList.add('incorrect');
-  }
-});
-};
   return (
  
 
-<div>
-      <div>
+<div className='questionMain'>
+ 
+      <div className='questions'>
         <h1>{counter}</h1>
         <h1>{allData[currentQuestion]?.question}</h1>
-        <button className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
- onClick={() => checkAnswer(allData[currentQuestion]?.option[0])}>{allData[currentQuestion]?.option[0]} 
+        <button onClick={() => checkAnswer(allData[currentQuestion]?.option[0])}>{allData[currentQuestion]?.option[0]} 
         </button><br />
-        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
- onClick={() => checkAnswer(allData[currentQuestion]?.option[1])}>{allData[currentQuestion]?.option[1]} 
+        <button   onClick={() => checkAnswer(allData[currentQuestion]?.option[1])}>{allData[currentQuestion]?.option[1]} 
         </button><br />
-        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
- onClick={() => checkAnswer(allData[currentQuestion]?.option[2])}>{allData[currentQuestion]?.option[2]}</button><br />
+        <button  onClick={() => checkAnswer(allData[currentQuestion]?.option[2])}>{allData[currentQuestion]?.option[2]}</button><br />
 
-        <button   className={`option-button ${userAnswer === 'correct' ? 'correct' : userAnswer === 'Wrong Answer' ? 'wrong' : ''}`}
- onClick={() => checkAnswer(allData[currentQuestion]?.option[3])}>{allData[currentQuestion]?.option[3]}</button><br />
+        <button    onClick={() => checkAnswer(allData[currentQuestion]?.option[3])}>{allData[currentQuestion]?.option[3]}</button><br />
 
 
 
@@ -119,6 +106,6 @@ buttons.forEach((button, index) => {
     </div>
   )
 
-
+}
 
 export default Question;

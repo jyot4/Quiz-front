@@ -19,7 +19,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Navigate, useNavigate } from 'react-router-dom';
 
-
+import './Main.css'
 
 
 function Main() {
@@ -54,17 +54,21 @@ function Main() {
   return (
     <>
     <div className='Super'>
-       <h1>Super Over</h1>      <div className='SuperMain'>
+      <div className='superMain'>
+       <h1>Super Over</h1>     
+        
        <p>Quiz your way to glary</p>
-       
-     </div>
-    </div>
-    <div >
+      
+     
+  
+    {/* <div className='countdown'> */}
       {!startCountdown ? (
         <button onClick={() => setStartCountdown(true)}>Start Quiz</button>
       ) : (
         <CountdownTimer seconds={3} onComplete={handleCountdownComplete} />
       )}
+    {/* </div> */}
+    </div>
     </div>
     {/* <Question/> */}
     </>

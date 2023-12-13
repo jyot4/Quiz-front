@@ -1,0 +1,50 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;  
+}
+
+.Super{
+width: 100%;
+height:100vh;
+background: rgb(34,193,195);
+background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+display: flex;
+/* flex-direction: column; */
+justify-content: center;
+align-items: center;
+}
+
+.superMain{
+    width:500px;
+    height: 500px;
+    /* background-color: antiquewhite; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+.superMain h1{
+  font-size: 75px;
+  margin-bottom: 10px;
+}
+
+
+.superMain p {
+  font-size: 25px;
+ 
+  
+}
+
+.superMain button {
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 20px;
+  
+}
